@@ -1,0 +1,27 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "config.go",
+        "get.go",
+        "pkgfile.go",
+        "pm.go",
+        "publish.go",
+        "repo.go",
+        "shell.go",
+    ],
+    importmap = "bazel_gazelle/vendor/github.com/whyrusleeping/gx/gxutil",
+    importpath = "github.com/whyrusleeping/gx/gxutil",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_ipfs_go_ipfs_api//:go_default_library",
+        "@com_github_mitchellh_go_homedir//:go_default_library",
+        "@com_github_multiformats_go_multiaddr//:go_default_library",
+        "@com_github_multiformats_go_multiaddr_net//:go_default_library",
+        "@com_github_multiformats_go_multihash//:go_default_library",
+        "@com_github_sabhiram_go_git_ignore//:go_default_library",
+        "@com_github_whyrusleeping_progmeter//:go_default_library",
+        "@com_github_whyrusleeping_stump//:go_default_library",
+    ],
+)

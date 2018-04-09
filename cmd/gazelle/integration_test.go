@@ -1258,6 +1258,24 @@ go_repository(
 		}})
 }
 
+func TestImportReposFromGxHash(t *testing.T) {
+	files := []fileSpec{
+		{path: "WORKSPACE"},
+	}
+	dir, err := createFiles(files)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer os.RemoveAll(dir)
+
+	args := []string{"update-repos", "-gx_package", "QmSpJByNKFX1sCsHBEp3R73FL4NF6FnQTEGyNAXHm2GS52"}
+	if err := runGazelle(dir, args); err != nil {
+		t.Fatal(err)
+	}
+
+	// check file content of workspace
+}
+
 func TestDeleteRulesInEmptyDir(t *testing.T) {
 	files := []fileSpec{
 		{path: "WORKSPACE"},

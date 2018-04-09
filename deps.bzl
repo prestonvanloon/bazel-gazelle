@@ -54,6 +54,26 @@ def gazelle_dependencies():
   #     overlay = _manifest["com_github_pelletier_go_toml"],
   # )
 
+def gx_dependencies():
+  _maybe(go_repository,
+     name = "com_github_whyrusleeping_stump",
+     commit = "206f8f13aae1697a6fc1f4a55799faf955971fc5",
+     importpath = "github.com/whyrusleeping/stump",
+  )
+
+  _maybe(go_repository,
+     name = "com_github_mitchellh_go_homedir",
+     commit = "b8bc1bf767474819792c23f32d8286a45736f1c6",
+     importpath = "github.com/mitchellh/go-homedir",
+  )
+
+  _maybe(go_repository,
+     name = "com_github_multiformats_go_multiaddr",
+     commit = "123a717755e0559ec8fda308019cd24e0a37bb07",
+     importpath = "github.com/multiformats/go-multiaddr",
+  )
+
+  
 def _maybe(repo_rule, name, **kwargs):
   if name not in native.existing_rules():
     repo_rule(name=name, **kwargs)

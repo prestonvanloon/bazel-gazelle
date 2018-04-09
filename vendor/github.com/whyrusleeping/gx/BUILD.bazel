@@ -1,0 +1,30 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "diff.go",
+        "main.go",
+        "repo.go",
+        "ui.go",
+        "update.go",
+    ],
+    importmap = "bazel_gazelle/vendor/github.com/whyrusleeping/gx",
+    importpath = "github.com/whyrusleeping/gx",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//vendor/github.com/whyrusleeping/gx/gxutil:go_default_library",
+        "@com_github_blang_semver//:go_default_library",
+        "@com_github_mitchellh_go_homedir//:go_default_library",
+        "@com_github_urfave_cli//:go_default_library",
+        "@com_github_whyrusleeping_json_filter//:go_default_library",
+        "@com_github_whyrusleeping_progmeter//:go_default_library",
+        "@com_github_whyrusleeping_stump//:go_default_library",
+    ],
+)
+
+go_binary(
+    name = "gx",
+    embed = [":go_default_library"],
+    visibility = ["//visibility:public"],
+)

@@ -12,9 +12,10 @@ go_rules_dependencies()
 
 go_register_toolchains()
 
-load("//:deps.bzl", "gazelle_dependencies")
+load("//:deps.bzl", "gazelle_dependencies", "gx_dependencies")
 
 gazelle_dependencies()
+gx_dependencies()
 
 load("@io_bazel_rules_go//tests:bazel_tests.bzl", "test_environment")
 

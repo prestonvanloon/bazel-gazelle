@@ -28,6 +28,7 @@ import (
 	"github.com/bazelbuild/bazel-gazelle/internal/repos"
 	"github.com/bazelbuild/bazel-gazelle/internal/wspace"
 	bf "github.com/bazelbuild/buildtools/build"
+	gx "github.com/whyrusleeping/gx/gxutil"
 )
 
 type updateReposFn func(c *updateReposConfiguration, oldFile *bf.File) error
@@ -36,6 +37,7 @@ type updateReposConfiguration struct {
 	fn           updateReposFn
 	repoRoot     string
 	lockFilename string
+	gxDepHash    string
 	importPaths  []string
 }
 
@@ -78,6 +80,7 @@ func newUpdateReposConfiguration(args []string) (*updateReposConfiguration, erro
 
 	fromFileFlag := fs.String("from_file", "", "Gazelle will translate repositories listed in this file into repository rules in WORKSPACE. Currently only dep's Gopkg.lock is supported.")
 	repoRootFlag := fs.String("repo_root", "", "path to the root directory of the repository. If unspecified, this is assumed to be the directory containing WORKSPACE.")
+	fromGxFlag := fs.String("gx_package", "", "TODO write this description for gx")
 	if err := fs.Parse(args); err != nil {
 		if err == flag.ErrHelp {
 			updateReposUsage(fs)
@@ -105,6 +108,13 @@ func newUpdateReposConfiguration(args []string) (*updateReposConfiguration, erro
 		}
 		c.fn = importFromLockFile
 		c.lockFilename = *fromFileFlag
+
+	case *fromGxFlag != "":
+		if len(fs.Args()) != 0 {
+			return nil, fmt.Errorf("Got %d positional arguments with -gx_package; wanted 0.\nTry -help for more information.", len(fs.Args()))
+		}
+		c.fn = importGxDependency
+		c.gxDepHash = *fromGxFlag
 
 	default:
 		if len(fs.Args()) == 0 {
@@ -177,4 +187,10 @@ func importFromLockFile(c *updateReposConfiguration, f *bf.File) error {
 
 	merger.MergeFile(genRules, nil, f, merger.RepoAttrs)
 	return nil
+}
+
+func importGxDependency(c *updateReposConfiguration, f *bf.File) error {
+	// Import the thing!
+
+	return fmt.Errorf("Hi")
 }
