@@ -670,9 +670,9 @@ go_library(
 go_library(
     name = "go_default_library",
     deps = [
-        "@com_github_golang_protobuf//descriptor:go_default_library_gen",
-        "@com_github_golang_protobuf//jsonpb:go_default_library_gen",
-        "@com_github_golang_protobuf//ptypes:go_default_library_gen",
+        "@com_github_golang_protobuf//descriptor:go_default_library",
+        "@com_github_golang_protobuf//jsonpb:go_default_library",
+        "@com_github_golang_protobuf//ptypes:go_default_library",
     ],
 )
 `,
